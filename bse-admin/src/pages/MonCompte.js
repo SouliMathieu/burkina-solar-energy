@@ -35,7 +35,7 @@ const MonCompte = () => {
     }
     setLoadingProfile(true);
     try {
-      const res = await api.put('/auth/update-profile', profile);
+      await api.put('/auth/update-profile', profile);
       // Mettre à jour les infos en localStorage
       const user = JSON.parse(localStorage.getItem('bse_user') || '{}');
       localStorage.setItem('bse_user', JSON.stringify({ ...user, nom: profile.nom, email: profile.email }));

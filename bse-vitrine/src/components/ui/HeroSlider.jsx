@@ -5,11 +5,11 @@ import { Link } from 'react-router-dom';
 import useSiteContent from '../../hooks/useSiteContent';
 
 const defaultSlides = [
-  { ctaLink: '/produits',    bg: 'from-dark to-blue-900'    },
-  { ctaLink: null,           bg: 'from-green-900 to-dark'   },
-  { ctaLink: '/produits',    bg: 'from-blue-900 to-dark'    },
-  { ctaLink: '/references',  bg: 'from-dark to-green-900'   },
-  { ctaLink: '/contact',     bg: 'from-yellow-900 to-dark'  },
+  { ctaLink: '/produits',   bg: 'from-dark to-blue-900'   },
+  { ctaLink: null,          bg: 'from-green-900 to-dark'  },
+  { ctaLink: '/produits',   bg: 'from-blue-900 to-dark'   },
+  { ctaLink: '/references', bg: 'from-dark to-green-900'  },
+  { ctaLink: '/contact',    bg: 'from-yellow-900 to-dark' },
 ];
 
 const HeroSlider = () => {
@@ -19,11 +19,11 @@ const HeroSlider = () => {
 
   const slides = defaultSlides.map((s, i) => ({
     id: i + 1,
-    title: content['hero_titre_' + (i + 1)] || '',
-    subtitle: content['hero_sous_titre_' + (i + 1)] || '',
-    image: content['hero_image_' + (i + 1)] || '',
-    ctaLink: s.ctaLink,
-    bg: s.bg,
+    title:    content[`hero_titre_${i + 1}`]      || '',
+    subtitle: content[`hero_sous_titre_${i + 1}`] || '',
+    image:    content[`hero_image_${i + 1}`]      || '',
+    ctaLink:  s.ctaLink,
+    bg:       s.bg,
   }));
 
   const whatsapp = content.whatsapp_number || '22667448282';
@@ -52,9 +52,9 @@ const HeroSlider = () => {
   };
 
   const variants = {
-    enter: (dir) => ({ x: dir > 0 ? '100%' : '-100%', opacity: 0 }),
+    enter:  (dir) => ({ x: dir > 0 ? '100%' : '-100%', opacity: 0 }),
     center: { x: 0, opacity: 1 },
-    exit: (dir) => ({ x: dir > 0 ? '-100%' : '100%', opacity: 0 }),
+    exit:   (dir) => ({ x: dir > 0 ? '-100%' : '100%', opacity: 0 }),
   };
 
   const slide = slides[current];
@@ -70,9 +70,9 @@ const HeroSlider = () => {
           animate="center"
           exit="exit"
           transition={{ duration: 0.6, ease: 'easeInOut' }}
-          className={`absolute inset-0 flex items-center ${slide.image ? '' : 'bg-gradient-to-br ' + slide.bg}`}
+          className={`absolute inset-0 flex items-center ${slide.image ? '' : `bg-gradient-to-br ${slide.bg}`}`}
           style={slide.image ? {
-            backgroundImage: 'url(' + 'http://localhost:5000' + slide.image + ')',
+            backgroundImage: `url(http://localhost:5000${slide.image})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           } : {}}
@@ -136,13 +136,13 @@ const HeroSlider = () => {
                     Découvrir
                   </Link>
                 ) : (
-                  <a href={"https://wa.me/" + whatsapp} target="_blank" rel="noreferrer"
+                  <a href={`https://wa.me/${whatsapp}`} target="_blank" rel="noreferrer"
                      className="bg-primary text-white px-6 sm:px-8 py-3 rounded-lg font-semibold hover:bg-yellow-500 transition-colors text-center text-sm sm:text-base">
                     Commander
                   </a>
                 )}
 
-                <a href={"https://wa.me/" + whatsapp} target="_blank" rel="noreferrer"
+                <a href={`https://wa.me/${whatsapp}`} target="_blank" rel="noreferrer"
                    className="flex items-center justify-center gap-2 bg-secondary text-white px-6 sm:px-8 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors text-sm sm:text-base">
                   <FaWhatsapp className="text-lg" />
                   WhatsApp
@@ -168,9 +168,10 @@ const HeroSlider = () => {
       <div className="absolute bottom-5 sm:bottom-6 left-1/2 -translate-x-1/2 z-20 flex gap-2">
         {slides.map((_, i) => (
           <button key={i} onClick={() => goTo(i)}
-                  aria-label={"Aller au slide " + (i + 1)}
-                  className={"transition-all duration-300 rounded-full " +
-                    (i === current ? 'w-8 h-3 bg-primary' : 'w-3 h-3 bg-white/50 hover:bg-white')}
+                  aria-label={`Aller au slide ${i + 1}`}
+                  className={`transition-all duration-300 rounded-full ${
+                    i === current ? 'w-8 h-3 bg-primary' : 'w-3 h-3 bg-white/50 hover:bg-white'
+                  }`}
           />
         ))}
       </div>
